@@ -11,58 +11,62 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigge
 const devices = [
   {
     id: 1,
-    name: "AQ Generator",
-    type: "Air Quality Monitor",
-    location: "Building A - Floor 1",
+    name: "Le-ture Unit #1",
+    type: "Natural Humidifier",
+    location: "Living Room",
     status: "online",
     battery: 85,
     lastUpdate: "2 minutes ago",
-    alerts: 3,
+    alerts: 1,
     metrics: {
-      co2: 450,
-      humidity: 50,
-      temperature: 86,
+      humidity: 65,
+      temperature: 24,
+      waterLevel: 77,
     },
   },
   {
     id: 2,
-    name: "TempCorp",
-    type: "Temperature Sensor",
-    location: "Building A - Floor 2",
+    name: "Le-ture Unit #2",
+    type: "Natural Humidifier",
+    location: "Bedroom",
     status: "online",
     battery: 92,
     lastUpdate: "5 minutes ago",
-    alerts: 1,
+    alerts: 0,
     metrics: {
-      temperature: 78,
-      humidity: 45,
+      humidity: 58,
+      temperature: 23,
+      waterLevel: 85,
     },
   },
   {
     id: 3,
-    name: "HumidityPro",
-    type: "Humidity Monitor",
-    location: "Building B - Floor 1",
+    name: "Le-ture Unit #3",
+    type: "Natural Humidifier",
+    location: "Office",
     status: "offline",
     battery: 23,
     lastUpdate: "2 hours ago",
-    alerts: 0,
+    alerts: 2,
     metrics: {
-      humidity: 62,
+      humidity: 42,
+      temperature: 26,
+      waterLevel: 15,
     },
   },
   {
     id: 4,
-    name: "MethaneSense",
-    type: "Gas Detector",
-    location: "Building C - Basement",
+    name: "Le-ture Unit #4",
+    type: "Natural Humidifier",
+    location: "Kids Room",
     status: "online",
     battery: 67,
     lastUpdate: "1 minute ago",
-    alerts: 2,
+    alerts: 0,
     metrics: {
-      methane: 220,
-      co2: 380,
+      humidity: 60,
+      temperature: 22,
+      waterLevel: 90,
     },
   },
 ]
@@ -83,8 +87,8 @@ export function Devices() {
     <div className="p-6">
       <div className="flex items-center justify-between mb-6">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">Devices</h1>
-          <p className="text-gray-500">Manage your air quality monitoring devices</p>
+          <h1 className="text-2xl font-bold text-gray-900">Le-ture Devices</h1>
+          <p className="text-gray-500">Manage your natural humidifier devices</p>
         </div>
         <Button>
           <Plus className="w-4 h-4 mr-2" />
@@ -227,12 +231,6 @@ export function Devices() {
                 <div className="pt-2 border-t">
                   <p className="text-xs text-gray-500 mb-2">Current Readings:</p>
                   <div className="grid grid-cols-2 gap-2 text-xs">
-                    {device.metrics.co2 && (
-                      <div>
-                        <span className="text-gray-500">CO2:</span>
-                        <span className="font-medium ml-1">{device.metrics.co2} PPM</span>
-                      </div>
-                    )}
                     {device.metrics.humidity && (
                       <div>
                         <span className="text-gray-500">Humidity:</span>
@@ -242,13 +240,13 @@ export function Devices() {
                     {device.metrics.temperature && (
                       <div>
                         <span className="text-gray-500">Temp:</span>
-                        <span className="font-medium ml-1">{device.metrics.temperature}°F</span>
+                        <span className="font-medium ml-1">{device.metrics.temperature}°C</span>
                       </div>
                     )}
-                    {device.metrics.methane && (
+                    {device.metrics.waterLevel && (
                       <div>
-                        <span className="text-gray-500">Methane:</span>
-                        <span className="font-medium ml-1">{device.metrics.methane} PPM</span>
+                        <span className="text-gray-500">Water:</span>
+                        <span className="font-medium ml-1">{device.metrics.waterLevel}%</span>
                       </div>
                     )}
                   </div>

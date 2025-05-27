@@ -20,29 +20,29 @@ import {
 } from "recharts"
 
 const weeklyData = [
-  { day: "Mon", co2: 420, humidity: 48, methane: 160, temperature: 75 },
-  { day: "Tue", co2: 450, humidity: 52, methane: 180, temperature: 78 },
-  { day: "Wed", co2: 380, humidity: 45, methane: 140, temperature: 72 },
-  { day: "Thu", co2: 520, humidity: 58, methane: 220, temperature: 82 },
-  { day: "Fri", co2: 480, humidity: 55, methane: 200, temperature: 80 },
-  { day: "Sat", co2: 350, humidity: 42, methane: 120, temperature: 70 },
-  { day: "Sun", co2: 320, humidity: 40, methane: 110, temperature: 68 },
+  { day: "Mon", humidity: 58, temperature: 22, waterUsage: 2.1, runtime: 8 },
+  { day: "Tue", humidity: 62, temperature: 23, waterUsage: 2.3, runtime: 9 },
+  { day: "Wed", humidity: 55, temperature: 21, waterUsage: 1.9, runtime: 7 },
+  { day: "Thu", humidity: 68, temperature: 24, waterUsage: 2.5, runtime: 10 },
+  { day: "Fri", humidity: 65, temperature: 23, waterUsage: 2.2, runtime: 8.5 },
+  { day: "Sat", humidity: 60, temperature: 22, waterUsage: 2.0, runtime: 8 },
+  { day: "Sun", humidity: 58, temperature: 21, waterUsage: 1.8, runtime: 7.5 },
 ]
 
 const monthlyData = [
-  { month: "Jan", co2: 420, humidity: 48, methane: 160 },
-  { month: "Feb", co2: 380, humidity: 45, methane: 140 },
-  { month: "Mar", co2: 450, humidity: 52, methane: 180 },
-  { month: "Apr", co2: 480, humidity: 55, methane: 200 },
-  { month: "May", co2: 520, humidity: 58, methane: 220 },
-  { month: "Jun", co2: 490, humidity: 56, methane: 210 },
+  { month: "Jan", humidity: 62, temperature: 22, waterUsage: 15.8 },
+  { month: "Feb", humidity: 58, temperature: 21, waterUsage: 14.2 },
+  { month: "Mar", humidity: 65, temperature: 23, waterUsage: 16.5 },
+  { month: "Apr", humidity: 68, temperature: 24, waterUsage: 17.2 },
+  { month: "May", humidity: 70, temperature: 25, waterUsage: 18.0 },
+  { month: "Jun", humidity: 67, temperature: 24, waterUsage: 17.5 },
 ]
 
 const deviceDistribution = [
-  { name: "AQ Generator", value: 35, color: "#8b5cf6" },
-  { name: "TempCorp", value: 25, color: "#06b6d4" },
-  { name: "HumidityPro", value: 20, color: "#10b981" },
-  { name: "MethaneSense", value: 20, color: "#f59e0b" },
+  { name: "Living Room", value: 35, color: "#8b5cf6" },
+  { name: "Bedroom", value: 25, color: "#06b6d4" },
+  { name: "Office", value: 20, color: "#10b981" },
+  { name: "Kids Room", value: 20, color: "#f59e0b" },
 ]
 
 export function Analytics() {
@@ -53,7 +53,7 @@ export function Analytics() {
       <div className="flex items-center justify-between mb-6">
         <div>
           <h1 className="text-2xl font-bold text-gray-900">Analytics</h1>
-          <p className="text-gray-500">Detailed insights and trends</p>
+          <p className="text-gray-500">Le-ture performance insights and trends</p>
         </div>
         <div className="flex gap-2">
           <Button variant="outline">
@@ -73,26 +73,11 @@ export function Analytics() {
           <CardContent className="p-4">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm text-gray-500">Avg CO2 Level</p>
-                <p className="text-2xl font-bold">445 PPM</p>
-                <div className="flex items-center gap-1 mt-1">
-                  <TrendingUp className="w-3 h-3 text-red-500" />
-                  <span className="text-xs text-red-500">+12% from last week</span>
-                </div>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardContent className="p-4">
-            <div className="flex items-center justify-between">
-              <div>
                 <p className="text-sm text-gray-500">Avg Humidity</p>
-                <p className="text-2xl font-bold">50%</p>
+                <p className="text-2xl font-bold">62%</p>
                 <div className="flex items-center gap-1 mt-1">
-                  <TrendingDown className="w-3 h-3 text-green-500" />
-                  <span className="text-xs text-green-500">-3% from last week</span>
+                  <TrendingUp className="w-3 h-3 text-green-500" />
+                  <span className="text-xs text-green-500">+8% from last week</span>
                 </div>
               </div>
             </div>
@@ -104,10 +89,10 @@ export function Analytics() {
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm text-gray-500">Avg Temperature</p>
-                <p className="text-2xl font-bold">75°F</p>
+                <p className="text-2xl font-bold">22.5°C</p>
                 <div className="flex items-center gap-1 mt-1">
-                  <TrendingUp className="w-3 h-3 text-orange-500" />
-                  <span className="text-xs text-orange-500">+5% from last week</span>
+                  <TrendingUp className="w-3 h-3 text-blue-500" />
+                  <span className="text-xs text-blue-500">+2% from last week</span>
                 </div>
               </div>
             </div>
@@ -118,11 +103,26 @@ export function Analytics() {
           <CardContent className="p-4">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm text-gray-500">Alert Rate</p>
-                <p className="text-2xl font-bold">8.5%</p>
+                <p className="text-sm text-gray-500">Water Usage</p>
+                <p className="text-2xl font-bold">15.8L</p>
                 <div className="flex items-center gap-1 mt-1">
                   <TrendingDown className="w-3 h-3 text-green-500" />
-                  <span className="text-xs text-green-500">-15% from last week</span>
+                  <span className="text-xs text-green-500">-5% from last week</span>
+                </div>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardContent className="p-4">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-sm text-gray-500">Runtime</p>
+                <p className="text-2xl font-bold">58h</p>
+                <div className="flex items-center gap-1 mt-1">
+                  <TrendingUp className="w-3 h-3 text-orange-500" />
+                  <span className="text-xs text-orange-500">+12% from last week</span>
                 </div>
               </div>
             </div>
@@ -152,9 +152,9 @@ export function Analytics() {
                     <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
                     <XAxis dataKey={timeRange === "week" ? "day" : "month"} axisLine={false} tickLine={false} />
                     <YAxis axisLine={false} tickLine={false} />
-                    <Line type="monotone" dataKey="co2" stroke="#8b5cf6" strokeWidth={2} name="CO2" />
-                    <Line type="monotone" dataKey="humidity" stroke="#06b6d4" strokeWidth={2} name="Humidity" />
-                    <Line type="monotone" dataKey="methane" stroke="#10b981" strokeWidth={2} name="Methane" />
+                    <Line type="monotone" dataKey="humidity" stroke="#8b5cf6" strokeWidth={2} name="Humidity" />
+                    <Line type="monotone" dataKey="temperature" stroke="#06b6d4" strokeWidth={2} name="Temperature" />
+                    <Line type="monotone" dataKey="waterUsage" stroke="#10b981" strokeWidth={2} name="Water Usage" />
                   </LineChart>
                 </ResponsiveContainer>
               </div>
@@ -200,7 +200,7 @@ export function Analytics() {
       <div className="mt-6">
         <Card>
           <CardHeader>
-            <CardTitle>Weekly Comparison</CardTitle>
+            <CardTitle>Weekly Humidity Comparison</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="h-64">
@@ -209,7 +209,7 @@ export function Analytics() {
                   <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
                   <XAxis dataKey="day" axisLine={false} tickLine={false} />
                   <YAxis axisLine={false} tickLine={false} />
-                  <Bar dataKey="co2" fill="#8b5cf6" radius={[4, 4, 0, 0]} />
+                  <Bar dataKey="humidity" fill="#8b5cf6" radius={[4, 4, 0, 0]} />
                 </BarChart>
               </ResponsiveContainer>
             </div>

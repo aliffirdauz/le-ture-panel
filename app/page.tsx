@@ -29,9 +29,9 @@ export default function Home() {
   }
 
   return (
-    <div className="flex h-screen bg-gray-50">
+    <div className="flex h-screen bg-gray-50 overflow-hidden">
       <Sidebar activeTab={activeTab} setActiveTab={setActiveTab} />
-      <div className="flex-1 overflow-hidden">{renderContent()}</div>
+      <div className="flex-1 overflow-auto">{renderContent()}</div>
     </div>
   )
 }

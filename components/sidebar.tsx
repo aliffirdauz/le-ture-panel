@@ -24,6 +24,7 @@ export function Sidebar({ activeTab, setActiveTab }: SidebarProps) {
           <Menu className="w-6 h-6 text-gray-600" />
           <h1 className="text-xl font-bold text-gray-900">Le-ture</h1>
         </div>
+        <p className="text-xs text-gray-500 mt-1">Natural Humidifier Control</p>
       </div>
 
       <nav className="flex-1 p-4">
@@ -36,7 +37,7 @@ export function Sidebar({ activeTab, setActiveTab }: SidebarProps) {
                   variant={activeTab === item.id ? "secondary" : "ghost"}
                   className={`w-full justify-start gap-3 ${
                     activeTab === item.id
-                      ? "bg-purple-50 text-purple-700 border-purple-200"
+                      ? "bg-teal-50 text-teal-700 border-teal-200"
                       : "text-gray-600 hover:text-gray-900"
                   }`}
                   onClick={() => setActiveTab(item.id)}
@@ -52,11 +53,11 @@ export function Sidebar({ activeTab, setActiveTab }: SidebarProps) {
 
       <div className="p-4 border-t border-gray-200">
         <div className="flex items-center gap-3 p-3 rounded-lg bg-gray-50">
-          <div className="w-8 h-8 bg-purple-600 rounded-full flex items-center justify-center">
+          <div className="w-8 h-8 bg-teal-600 rounded-full flex items-center justify-center">
             <User className="w-4 h-4 text-white" />
           </div>
           <div className="flex-1">
-            <p className="text-sm font-medium text-gray-900">John Doe</p>
+            <p className="text-sm font-medium text-gray-900">Admin User</p>
             <p className="text-xs text-gray-500">Administrator</p>
           </div>
         </div>
