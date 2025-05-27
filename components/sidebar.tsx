@@ -32,10 +32,13 @@ export default function Sidebar() {
     <div className="w-64 bg-white border-r border-gray-200 flex flex-col">
       <div className="p-6 border-b border-gray-200">
         <div className="flex items-center gap-3">
-          <Menu className="w-6 h-6 text-gray-600" />
-          <h1 className="text-xl font-bold text-gray-900">Le-ture</h1>
+          <img
+            className="object-cover object-center"
+            src="leture-dark.png"
+            alt="nature image"
+          />
         </div>
-        <p className="text-xs text-gray-500 mt-1">Natural Humidifier Control</p>
+        <p className="text-xs text-center text-gray-500 mt-1">Natural Humidifier Control</p>
       </div>
 
       <nav className="flex-1 p-4">

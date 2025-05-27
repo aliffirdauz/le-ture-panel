@@ -63,7 +63,7 @@ export default function Dashboard() {
         <div className="flex items-center gap-4">
           <Button variant="outline" size="sm">
             <Calendar className="w-4 h-4 mr-2" />
-            January 2025
+            May 2025
           </Button>
           <Button variant="ghost" size="sm">
             <Bell className="w-5 h-5" />
