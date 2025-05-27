@@ -71,7 +71,7 @@ const devices = [
   },
 ]
 
-export function Devices() {
+export default function Devices() {
   const [searchTerm, setSearchTerm] = useState("")
   const [filterStatus, setFilterStatus] = useState("all")
 

@@ -93,7 +93,7 @@ const reportTemplates = [
   },
 ]
 
-export function Reports() {
+export default function Reports() {
   const [searchTerm, setSearchTerm] = useState("")
   const [filterType, setFilterType] = useState("all")
   const [filterStatus, setFilterStatus] = useState("all")

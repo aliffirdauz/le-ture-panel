@@ -45,7 +45,7 @@ const deviceDistribution = [
   { name: "Kids Room", value: 20, color: "#f59e0b" },
 ]
 
-export function Analytics() {
+export default function Analytics() {
   const [timeRange, setTimeRange] = useState("week")
 
   return (

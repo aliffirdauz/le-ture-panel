@@ -1,21 +1,25 @@
-import type React from "react"
-import type { Metadata } from "next"
-import "./globals.css"
 
-export const metadata: Metadata = {
-  title: "Le-ture Admin Panel",
-  description: "Control panel for Le-ture natural humidifier devices",
-  generator: "v0.dev",
-}
+import "./globals.css";
+import { ReactNode } from "react";
+import Sidebar from "@/components/sidebar";
+import ThemeProvider from "@/components/theme-provider";
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode
-}>) {
+export const metadata = {
+  title: "Le-Ture Panel",
+  description: "Factory Monitoring Dashboard",
+};
+
+export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        <ThemeProvider>
+          <div className="flex min-h-screen">
+            <Sidebar />
+            <main className="flex-1 p-4">{children}</main>
+          </div>
+        </ThemeProvider>
+      </body>
     </html>
-  )
+  );
 }

@@ -49,7 +49,7 @@ const alerts = [
   },
 ]
 
-export function Dashboard() {
+export default function Dashboard() {
   const [selectedMetric, setSelectedMetric] = useState("humidity")
 
   return (

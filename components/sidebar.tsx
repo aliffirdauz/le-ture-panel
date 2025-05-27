@@ -1,21 +1,32 @@
-"use client"
+"use client";
 
-import { LayoutDashboard, Cpu, BarChart3, FileText, Settings, Menu, User } from "lucide-react"
-import { Button } from "@/components/ui/button"
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import {
+  LayoutDashboard,
+  Cpu,
+  BarChart3,
+  FileText,
+  Settings,
+  Menu,
+  User,
+} from "lucide-react";
 
-interface SidebarProps {
-  activeTab: string
-  setActiveTab: (tab: string) => void
-}
+const menuItems = [
+  {
+    id: "dashboard",
+    label: "Dashboard",
+    icon: LayoutDashboard,
+    href: "/dashboard",
+  },
+  { id: "devices", label: "Devices", icon: Cpu, href: "/devices" },
+  { id: "analytics", label: "Analytics", icon: BarChart3, href: "/analytics" },
+  { id: "reports", label: "Reports", icon: FileText, href: "/reports" },
+  { id: "settings", label: "Settings", icon: Settings, href: "/settings" },
+];
 
-export function Sidebar({ activeTab, setActiveTab }: SidebarProps) {
-  const menuItems = [
-    { id: "dashboard", label: "Dashboard", icon: LayoutDashboard },
-    { id: "devices", label: "Devices", icon: Cpu },
-    { id: "analytics", label: "Analytics", icon: BarChart3 },
-    { id: "reports", label: "Reports", icon: FileText },
-    { id: "settings", label: "Settings", icon: Settings },
-  ]
+export default function Sidebar() {
+  const pathname = usePathname();
 
   return (
     <div className="w-64 bg-white border-r border-gray-200 flex flex-col">
@@ -29,25 +40,21 @@ export function Sidebar({ activeTab, setActiveTab }: SidebarProps) {
 
       <nav className="flex-1 p-4">
         <ul className="space-y-2">
-          {menuItems.map((item) => {
-            const Icon = item.icon
-            return (
-              <li key={item.id}>
-                <Button
-                  variant={activeTab === item.id ? "secondary" : "ghost"}
-                  className={`w-full justify-start gap-3 ${
-                    activeTab === item.id
-                      ? "bg-teal-50 text-teal-700 border-teal-200"
-                      : "text-gray-600 hover:text-gray-900"
-                  }`}
-                  onClick={() => setActiveTab(item.id)}
-                >
-                  <Icon className="w-5 h-5" />
-                  {item.label}
-                </Button>
-              </li>
-            )
-          })}
+          {menuItems.map(({ id, label, icon: Icon, href }) => (
+            <li key={id}>
+              <Link
+                href={href}
+                className={`flex items-center gap-3 w-full px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
+                  pathname === href
+                    ? "bg-teal-50 text-teal-700 border-teal-200"
+                    : "text-gray-600 hover:text-gray-900 hover:bg-gray-100"
+                }`}
+              >
+                <Icon className="w-5 h-5" />
+                {label}
+              </Link>
+            </li>
+          ))}
         </ul>
       </nav>
 
@@ -63,5 +70,5 @@ export function Sidebar({ activeTab, setActiveTab }: SidebarProps) {
         </div>
       </div>
     </div>
-  )
+  );
 }
