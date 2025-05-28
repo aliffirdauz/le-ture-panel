@@ -223,7 +223,7 @@ export default function Dashboard() {
                 </div>
                 <div>
                   <p className="text-sm text-gray-500">Water Tank Capacity</p>
-                  <p className="font-medium">4.5L</p>
+                  <p className="font-medium">50L</p>
                 </div>
                 <div>
                   <p className="text-sm text-gray-500">Coverage Area</p>
