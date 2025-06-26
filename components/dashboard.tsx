@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   Area,
   AreaChart,
@@ -21,6 +21,7 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { useRouter } from "next/navigation";
 
 const chartData = [
   {
@@ -107,6 +108,14 @@ const alerts = [
 
 export default function Dashboard() {
   const [selectedMetric, setSelectedMetric] = useState("humidity");
+  const router = useRouter();
+
+  useEffect(() => {
+    const isLoggedIn = localStorage.getItem("isLoggedIn");
+    if (isLoggedIn !== "true") {
+      router.push("/login");
+    }
+  }, []);
 
   return (
     <div className="p-6 min-h-full">

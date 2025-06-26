@@ -1,12 +1,19 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { Download, FileText, Eye } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { Input } from "@/components/ui/input"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { useState, useEffect } from "react";
+import { Download, FileText, Eye } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Input } from "@/components/ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { useRouter } from "next/navigation";
 
 const reports = [
   {
@@ -64,7 +71,7 @@ const reports = [
     devices: ["All Devices"],
     format: "PDF",
   },
-]
+];
 
 const reportTemplates = [
   {
@@ -91,26 +98,42 @@ const reportTemplates = [
     description: "Summary of all alerts and incidents",
     frequency: "On-demand",
   },
-]
+];
 
 export default function Reports() {
-  const [searchTerm, setSearchTerm] = useState("")
-  const [filterType, setFilterType] = useState("all")
-  const [filterStatus, setFilterStatus] = useState("all")
+  const [searchTerm, setSearchTerm] = useState("");
+  const [filterType, setFilterType] = useState("all");
+  const [filterStatus, setFilterStatus] = useState("all");
 
   const filteredReports = reports.filter((report) => {
-    const matchesSearch = report.name.toLowerCase().includes(searchTerm.toLowerCase())
-    const matchesType = filterType === "all" || report.type.toLowerCase().includes(filterType.toLowerCase())
-    const matchesStatus = filterStatus === "all" || report.status === filterStatus
-    return matchesSearch && matchesType && matchesStatus
-  })
+    const matchesSearch = report.name
+      .toLowerCase()
+      .includes(searchTerm.toLowerCase());
+    const matchesType =
+      filterType === "all" ||
+      report.type.toLowerCase().includes(filterType.toLowerCase());
+    const matchesStatus =
+      filterStatus === "all" || report.status === filterStatus;
+    return matchesSearch && matchesType && matchesStatus;
+  });
+
+  const router = useRouter();
+
+  useEffect(() => {
+    const isLoggedIn = localStorage.getItem("isLoggedIn");
+    if (isLoggedIn !== "true") {
+      router.push("/login");
+    }
+  }, []);
 
   return (
     <div className="p-6">
       <div className="flex items-center justify-between mb-6">
         <div>
           <h1 className="text-2xl font-bold text-gray-900">Reports</h1>
-          <p className="text-gray-500">Generate and manage environmental reports</p>
+          <p className="text-gray-500">
+            Generate and manage environmental reports
+          </p>
         </div>
         <Button>
           <FileText className="w-4 h-4 mr-2" />
@@ -145,7 +168,14 @@ export default function Reports() {
         <Card>
           <CardContent className="p-4">
             <div className="text-2xl font-bold text-purple-600">
-              {reports.reduce((sum, r) => sum + (r.size !== "-" ? Number.parseFloat(r.size) : 0), 0).toFixed(1)} MB
+              {reports
+                .reduce(
+                  (sum, r) =>
+                    sum + (r.size !== "-" ? Number.parseFloat(r.size) : 0),
+                  0
+                )
+                .toFixed(1)}{" "}
+              MB
             </div>
             <p className="text-sm text-gray-500">Total Size</p>
           </CardContent>
@@ -184,23 +214,41 @@ export default function Reports() {
             <CardContent>
               <div className="space-y-4">
                 {filteredReports.map((report) => (
-                  <div key={report.id} className="p-4 border border-gray-200 rounded-lg hover:bg-gray-50">
+                  <div
+                    key={report.id}
+                    className="p-4 border border-gray-200 rounded-lg hover:bg-gray-50"
+                  >
                     <div className="flex items-start justify-between">
                       <div className="flex-1">
                         <div className="flex items-center gap-3 mb-2">
-                          <h3 className="font-semibold text-gray-900">{report.name}</h3>
-                          <Badge variant={report.status === "completed" ? "default" : "secondary"}>
+                          <h3 className="font-semibold text-gray-900">
+                            {report.name}
+                          </h3>
+                          <Badge
+                            variant={
+                              report.status === "completed"
+                                ? "default"
+                                : "secondary"
+                            }
+                          >
                             {report.status}
                           </Badge>
                           <Badge variant="outline">{report.format}</Badge>
                         </div>
-                        <p className="text-sm text-gray-500 mb-1">{report.type}</p>
-                        <p className="text-sm text-gray-500 mb-2">Period: {report.period}</p>
+                        <p className="text-sm text-gray-500 mb-1">
+                          {report.type}
+                        </p>
+                        <p className="text-sm text-gray-500 mb-2">
+                          Period: {report.period}
+                        </p>
                         <div className="flex items-center gap-4 text-xs text-gray-400">
                           <span>Generated: {report.generatedDate}</span>
                           <span>Size: {report.size}</span>
                           <span>
-                            Devices: {Array.isArray(report.devices) ? report.devices.join(", ") : report.devices}
+                            Devices:{" "}
+                            {Array.isArray(report.devices)
+                              ? report.devices.join(", ")
+                              : report.devices}
                           </span>
                         </div>
                       </div>
@@ -208,7 +256,11 @@ export default function Reports() {
                         <Button variant="ghost" size="sm">
                           <Eye className="w-4 h-4" />
                         </Button>
-                        <Button variant="ghost" size="sm" disabled={report.status !== "completed"}>
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          disabled={report.status !== "completed"}
+                        >
                           <Download className="w-4 h-4" />
                         </Button>
                       </div>
@@ -229,14 +281,21 @@ export default function Reports() {
             <CardContent>
               <div className="space-y-4">
                 {reportTemplates.map((template) => (
-                  <div key={template.id} className="p-3 border border-gray-200 rounded-lg">
+                  <div
+                    key={template.id}
+                    className="p-3 border border-gray-200 rounded-lg"
+                  >
                     <div className="flex items-start justify-between mb-2">
-                      <h4 className="font-medium text-gray-900">{template.name}</h4>
+                      <h4 className="font-medium text-gray-900">
+                        {template.name}
+                      </h4>
                       <Badge variant="outline" className="text-xs">
                         {template.frequency}
                       </Badge>
                     </div>
-                    <p className="text-sm text-gray-500 mb-3">{template.description}</p>
+                    <p className="text-sm text-gray-500 mb-3">
+                      {template.description}
+                    </p>
                     <Button size="sm" className="w-full">
                       Generate Now
                     </Button>
@@ -256,7 +315,9 @@ export default function Reports() {
                 <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
                   <div>
                     <p className="font-medium text-sm">Weekly Summary</p>
-                    <p className="text-xs text-gray-500">Every Monday at 9:00 AM</p>
+                    <p className="text-xs text-gray-500">
+                      Every Monday at 9:00 AM
+                    </p>
                   </div>
                   <Badge variant="default">Active</Badge>
                 </div>
@@ -276,5 +337,5 @@ export default function Reports() {
         </div>
       </div>
     </div>
-  )
+  );
 }

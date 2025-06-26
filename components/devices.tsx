@@ -1,12 +1,26 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { Plus, Search, Filter, MoreVertical, Wifi, WifiOff, Battery } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
-import { Badge } from "@/components/ui/badge"
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
+import { useState, useEffect } from "react";
+import {
+  Plus,
+  Search,
+  Filter,
+  MoreVertical,
+  Wifi,
+  WifiOff,
+  Battery,
+} from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Badge } from "@/components/ui/badge";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { useRouter } from "next/navigation";
 
 const devices = [
   {
@@ -69,26 +83,38 @@ const devices = [
       waterLevel: 90,
     },
   },
-]
+];
 
 export default function Devices() {
-  const [searchTerm, setSearchTerm] = useState("")
-  const [filterStatus, setFilterStatus] = useState("all")
+  const [searchTerm, setSearchTerm] = useState("");
+  const [filterStatus, setFilterStatus] = useState("all");
 
   const filteredDevices = devices.filter((device) => {
     const matchesSearch =
       device.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      device.location.toLowerCase().includes(searchTerm.toLowerCase())
-    const matchesFilter = filterStatus === "all" || device.status === filterStatus
-    return matchesSearch && matchesFilter
-  })
+      device.location.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchesFilter =
+      filterStatus === "all" || device.status === filterStatus;
+    return matchesSearch && matchesFilter;
+  });
+
+  const router = useRouter();
+
+  useEffect(() => {
+    const isLoggedIn = localStorage.getItem("isLoggedIn");
+    if (isLoggedIn !== "true") {
+      router.push("/login");
+    }
+  }, []);
 
   return (
     <div className="p-6">
       <div className="flex items-center justify-between mb-6">
         <div>
           <h1 className="text-2xl font-bold text-gray-900">Le-ture Devices</h1>
-          <p className="text-gray-500">Manage your natural humidifier devices</p>
+          <p className="text-gray-500">
+            Manage your natural humidifier devices
+          </p>
         </div>
         <Button>
           <Plus className="w-4 h-4 mr-2" />
@@ -115,9 +141,15 @@ export default function Devices() {
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent>
-            <DropdownMenuItem onClick={() => setFilterStatus("all")}>All Devices</DropdownMenuItem>
-            <DropdownMenuItem onClick={() => setFilterStatus("online")}>Online Only</DropdownMenuItem>
-            <DropdownMenuItem onClick={() => setFilterStatus("offline")}>Offline Only</DropdownMenuItem>
+            <DropdownMenuItem onClick={() => setFilterStatus("all")}>
+              All Devices
+            </DropdownMenuItem>
+            <DropdownMenuItem onClick={() => setFilterStatus("online")}>
+              Online Only
+            </DropdownMenuItem>
+            <DropdownMenuItem onClick={() => setFilterStatus("offline")}>
+              Offline Only
+            </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
@@ -142,14 +174,19 @@ export default function Devices() {
         </Card>
         <Card>
           <CardContent className="p-4">
-            <div className="text-2xl font-bold text-orange-600">{devices.reduce((sum, d) => sum + d.alerts, 0)}</div>
+            <div className="text-2xl font-bold text-orange-600">
+              {devices.reduce((sum, d) => sum + d.alerts, 0)}
+            </div>
             <p className="text-sm text-gray-500">Total Alerts</p>
           </CardContent>
         </Card>
         <Card>
           <CardContent className="p-4">
             <div className="text-2xl font-bold text-blue-600">
-              {Math.round(devices.reduce((sum, d) => sum + d.battery, 0) / devices.length)}%
+              {Math.round(
+                devices.reduce((sum, d) => sum + d.battery, 0) / devices.length
+              )}
+              %
             </div>
             <p className="text-sm text-gray-500">Avg Battery</p>
           </CardContent>
@@ -164,7 +201,9 @@ export default function Devices() {
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
                   <div
-                    className={`w-3 h-3 rounded-full ${device.status === "online" ? "bg-green-500" : "bg-red-500"}`}
+                    className={`w-3 h-3 rounded-full ${
+                      device.status === "online" ? "bg-green-500" : "bg-red-500"
+                    }`}
                   />
                   <div>
                     <CardTitle className="text-lg">{device.name}</CardTitle>
@@ -181,7 +220,9 @@ export default function Devices() {
                     <DropdownMenuItem>View Details</DropdownMenuItem>
                     <DropdownMenuItem>Edit Device</DropdownMenuItem>
                     <DropdownMenuItem>Download Data</DropdownMenuItem>
-                    <DropdownMenuItem className="text-red-600">Remove Device</DropdownMenuItem>
+                    <DropdownMenuItem className="text-red-600">
+                      Remove Device
+                    </DropdownMenuItem>
                   </DropdownMenuContent>
                 </DropdownMenu>
               </div>
@@ -201,7 +242,13 @@ export default function Devices() {
                     ) : (
                       <WifiOff className="w-4 h-4 text-red-500" />
                     )}
-                    <Badge variant={device.status === "online" ? "default" : "destructive"}>{device.status}</Badge>
+                    <Badge
+                      variant={
+                        device.status === "online" ? "default" : "destructive"
+                      }
+                    >
+                      {device.status}
+                    </Badge>
                   </div>
                 </div>
 
@@ -213,8 +260,8 @@ export default function Devices() {
                         device.battery > 50
                           ? "text-green-500"
                           : device.battery > 20
-                            ? "text-orange-500"
-                            : "text-red-500"
+                          ? "text-orange-500"
+                          : "text-red-500"
                       }`}
                     />
                     <span className="font-medium">{device.battery}%</span>
@@ -229,35 +276,45 @@ export default function Devices() {
                 )}
 
                 <div className="pt-2 border-t">
-                  <p className="text-xs text-gray-500 mb-2">Current Readings:</p>
+                  <p className="text-xs text-gray-500 mb-2">
+                    Current Readings:
+                  </p>
                   <div className="grid grid-cols-2 gap-2 text-xs">
                     {device.metrics.humidity && (
                       <div>
                         <span className="text-gray-500">Humidity:</span>
-                        <span className="font-medium ml-1">{device.metrics.humidity}%</span>
+                        <span className="font-medium ml-1">
+                          {device.metrics.humidity}%
+                        </span>
                       </div>
                     )}
                     {device.metrics.temperature && (
                       <div>
                         <span className="text-gray-500">Temp:</span>
-                        <span className="font-medium ml-1">{device.metrics.temperature}°C</span>
+                        <span className="font-medium ml-1">
+                          {device.metrics.temperature}°C
+                        </span>
                       </div>
                     )}
                     {device.metrics.waterLevel && (
                       <div>
                         <span className="text-gray-500">Water:</span>
-                        <span className="font-medium ml-1">{device.metrics.waterLevel}%</span>
+                        <span className="font-medium ml-1">
+                          {device.metrics.waterLevel}%
+                        </span>
                       </div>
                     )}
                   </div>
                 </div>
 
-                <div className="text-xs text-gray-400 pt-2">Last update: {device.lastUpdate}</div>
+                <div className="text-xs text-gray-400 pt-2">
+                  Last update: {device.lastUpdate}
+                </div>
               </div>
             </CardContent>
           </Card>
         ))}
       </div>
     </div>
-  )
+  );
 }

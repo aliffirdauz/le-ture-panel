@@ -1,10 +1,11 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { Calendar, Download, TrendingUp, TrendingDown } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { useState, useEffect } from "react";
+import { Calendar, Download, TrendingUp, TrendingDown } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { useRouter } from "next/navigation";
 import {
   LineChart,
   Line,
@@ -17,7 +18,7 @@ import {
   PieChart,
   Pie,
   Cell,
-} from "recharts"
+} from "recharts";
 
 const weeklyData = [
   { day: "Mon", humidity: 58, temperature: 22, waterUsage: 2.1, runtime: 8 },
@@ -27,7 +28,7 @@ const weeklyData = [
   { day: "Fri", humidity: 65, temperature: 23, waterUsage: 2.2, runtime: 8.5 },
   { day: "Sat", humidity: 60, temperature: 22, waterUsage: 2.0, runtime: 8 },
   { day: "Sun", humidity: 58, temperature: 21, waterUsage: 1.8, runtime: 7.5 },
-]
+];
 
 const monthlyData = [
   { month: "Jan", humidity: 62, temperature: 22, waterUsage: 15.8 },
@@ -36,24 +37,34 @@ const monthlyData = [
   { month: "Apr", humidity: 68, temperature: 24, waterUsage: 17.2 },
   { month: "May", humidity: 70, temperature: 25, waterUsage: 18.0 },
   { month: "Jun", humidity: 67, temperature: 24, waterUsage: 17.5 },
-]
+];
 
 const deviceDistribution = [
   { name: "Living Room", value: 35, color: "#8b5cf6" },
   { name: "Bedroom", value: 25, color: "#06b6d4" },
   { name: "Office", value: 20, color: "#10b981" },
   { name: "Kids Room", value: 20, color: "#f59e0b" },
-]
+];
 
 export default function Analytics() {
-  const [timeRange, setTimeRange] = useState("week")
+  const [timeRange, setTimeRange] = useState("week");
+  const router = useRouter();
+
+  useEffect(() => {
+    const isLoggedIn = localStorage.getItem("isLoggedIn");
+    if (isLoggedIn !== "true") {
+      router.push("/login");
+    }
+  }, []);
 
   return (
     <div className="p-6">
       <div className="flex items-center justify-between mb-6">
         <div>
           <h1 className="text-2xl font-bold text-gray-900">Analytics</h1>
-          <p className="text-gray-500">Le-ture performance insights and trends</p>
+          <p className="text-gray-500">
+            Le-ture performance insights and trends
+          </p>
         </div>
         <div className="flex gap-2">
           <Button variant="outline">
@@ -77,7 +88,9 @@ export default function Analytics() {
                 <p className="text-2xl font-bold">62%</p>
                 <div className="flex items-center gap-1 mt-1">
                   <TrendingUp className="w-3 h-3 text-green-500" />
-                  <span className="text-xs text-green-500">+8% from last week</span>
+                  <span className="text-xs text-green-500">
+                    +8% from last week
+                  </span>
                 </div>
               </div>
             </div>
@@ -92,7 +105,9 @@ export default function Analytics() {
                 <p className="text-2xl font-bold">22.5°C</p>
                 <div className="flex items-center gap-1 mt-1">
                   <TrendingUp className="w-3 h-3 text-blue-500" />
-                  <span className="text-xs text-blue-500">+2% from last week</span>
+                  <span className="text-xs text-blue-500">
+                    +2% from last week
+                  </span>
                 </div>
               </div>
             </div>
@@ -107,7 +122,9 @@ export default function Analytics() {
                 <p className="text-2xl font-bold">15.8L</p>
                 <div className="flex items-center gap-1 mt-1">
                   <TrendingDown className="w-3 h-3 text-green-500" />
-                  <span className="text-xs text-green-500">-5% from last week</span>
+                  <span className="text-xs text-green-500">
+                    -5% from last week
+                  </span>
                 </div>
               </div>
             </div>
@@ -122,7 +139,9 @@ export default function Analytics() {
                 <p className="text-2xl font-bold">58h</p>
                 <div className="flex items-center gap-1 mt-1">
                   <TrendingUp className="w-3 h-3 text-orange-500" />
-                  <span className="text-xs text-orange-500">+12% from last week</span>
+                  <span className="text-xs text-orange-500">
+                    +12% from last week
+                  </span>
                 </div>
               </div>
             </div>
@@ -148,13 +167,37 @@ export default function Analytics() {
             <CardContent>
               <div className="h-80">
                 <ResponsiveContainer width="100%" height="100%">
-                  <LineChart data={timeRange === "week" ? weeklyData : monthlyData}>
+                  <LineChart
+                    data={timeRange === "week" ? weeklyData : monthlyData}
+                  >
                     <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
-                    <XAxis dataKey={timeRange === "week" ? "day" : "month"} axisLine={false} tickLine={false} />
+                    <XAxis
+                      dataKey={timeRange === "week" ? "day" : "month"}
+                      axisLine={false}
+                      tickLine={false}
+                    />
                     <YAxis axisLine={false} tickLine={false} />
-                    <Line type="monotone" dataKey="humidity" stroke="#8b5cf6" strokeWidth={2} name="Humidity" />
-                    <Line type="monotone" dataKey="temperature" stroke="#06b6d4" strokeWidth={2} name="Temperature" />
-                    <Line type="monotone" dataKey="waterUsage" stroke="#10b981" strokeWidth={2} name="Water Usage" />
+                    <Line
+                      type="monotone"
+                      dataKey="humidity"
+                      stroke="#8b5cf6"
+                      strokeWidth={2}
+                      name="Humidity"
+                    />
+                    <Line
+                      type="monotone"
+                      dataKey="temperature"
+                      stroke="#06b6d4"
+                      strokeWidth={2}
+                      name="Temperature"
+                    />
+                    <Line
+                      type="monotone"
+                      dataKey="waterUsage"
+                      stroke="#10b981"
+                      strokeWidth={2}
+                      name="Water Usage"
+                    />
                   </LineChart>
                 </ResponsiveContainer>
               </div>
@@ -172,7 +215,14 @@ export default function Analytics() {
               <div className="h-64">
                 <ResponsiveContainer width="100%" height="100%">
                   <PieChart>
-                    <Pie data={deviceDistribution} cx="50%" cy="50%" innerRadius={40} outerRadius={80} dataKey="value">
+                    <Pie
+                      data={deviceDistribution}
+                      cx="50%"
+                      cy="50%"
+                      innerRadius={40}
+                      outerRadius={80}
+                      dataKey="value"
+                    >
                       {deviceDistribution.map((entry, index) => (
                         <Cell key={`cell-${index}`} fill={entry.color} />
                       ))}
@@ -182,9 +232,15 @@ export default function Analytics() {
               </div>
               <div className="space-y-2 mt-4">
                 {deviceDistribution.map((device) => (
-                  <div key={device.name} className="flex items-center justify-between">
+                  <div
+                    key={device.name}
+                    className="flex items-center justify-between"
+                  >
                     <div className="flex items-center gap-2">
-                      <div className="w-3 h-3 rounded-full" style={{ backgroundColor: device.color }} />
+                      <div
+                        className="w-3 h-3 rounded-full"
+                        style={{ backgroundColor: device.color }}
+                      />
                       <span className="text-sm">{device.name}</span>
                     </div>
                     <span className="text-sm font-medium">{device.value}%</span>
@@ -209,7 +265,11 @@ export default function Analytics() {
                   <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
                   <XAxis dataKey="day" axisLine={false} tickLine={false} />
                   <YAxis axisLine={false} tickLine={false} />
-                  <Bar dataKey="humidity" fill="#8b5cf6" radius={[4, 4, 0, 0]} />
+                  <Bar
+                    dataKey="humidity"
+                    fill="#8b5cf6"
+                    radius={[4, 4, 0, 0]}
+                  />
                 </BarChart>
               </ResponsiveContainer>
             </div>
@@ -217,5 +277,5 @@ export default function Analytics() {
         </Card>
       </div>
     </div>
-  )
+  );
 }

@@ -1,7 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
+import { LogOut } from "lucide-react";
 import {
   LayoutDashboard,
   Cpu,
@@ -27,6 +28,7 @@ const menuItems = [
 
 export default function Sidebar() {
   const pathname = usePathname();
+  const router = useRouter();
 
   return (
     <div className="w-64 bg-white border-r border-gray-200 flex flex-col">
@@ -38,7 +40,9 @@ export default function Sidebar() {
             alt="nature image"
           />
         </div>
-        <p className="text-xs text-center text-gray-500 mt-1">Natural Humidifier Control</p>
+        <p className="text-xs text-center text-gray-500 mt-1">
+          Natural Humidifier Control
+        </p>
       </div>
 
       <nav className="flex-1 p-4">
@@ -62,14 +66,26 @@ export default function Sidebar() {
       </nav>
 
       <div className="p-4 border-t border-gray-200">
-        <div className="flex items-center gap-3 p-3 rounded-lg bg-gray-50">
-          <div className="w-8 h-8 bg-teal-600 rounded-full flex items-center justify-center">
-            <User className="w-4 h-4 text-white" />
+        <div className="flex items-center justify-between p-3 rounded-lg bg-gray-50">
+          <div className="flex items-center gap-3">
+            <div className="w-8 h-8 bg-teal-600 rounded-full flex items-center justify-center">
+              <User className="w-4 h-4 text-white" />
+            </div>
+            <div className="flex-1">
+              <p className="text-sm font-medium text-gray-900">Admin User</p>
+              <p className="text-xs text-gray-500">Administrator</p>
+            </div>
           </div>
-          <div className="flex-1">
-            <p className="text-sm font-medium text-gray-900">Admin User</p>
-            <p className="text-xs text-gray-500">Administrator</p>
-          </div>
+          <button
+            onClick={() => {
+              localStorage.removeItem("isLoggedIn");
+              router.push("/login");
+            }}
+            className="text-gray-400 hover:text-red-600 transition"
+            title="Logout"
+          >
+            <LogOut className="w-5 h-5" />
+          </button>
         </div>
       </div>
     </div>

@@ -1,15 +1,22 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { Save, Bell, Shield, Database } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Switch } from "@/components/ui/switch"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Textarea } from "@/components/ui/textarea"
+import { useState, useEffect } from "react";
+import { Save, Bell, Shield, Database } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Switch } from "@/components/ui/switch";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Textarea } from "@/components/ui/textarea";
+import { useRouter } from "next/navigation";
 
 export default function Settings() {
   const [settings, setSettings] = useState({
@@ -35,18 +42,29 @@ export default function Settings() {
       sessionTimeout: "30",
       passwordExpiry: "90",
     },
-  })
+  });
 
   const handleSave = () => {
-    console.log("Settings saved:", settings)
-  }
+    console.log("Settings saved:", settings);
+  };
+
+  const router = useRouter();
+
+  useEffect(() => {
+    const isLoggedIn = localStorage.getItem("isLoggedIn");
+    if (isLoggedIn !== "true") {
+      router.push("/login");
+    }
+  }, []);
 
   return (
     <div className="p-6">
       <div className="flex items-center justify-between mb-6">
         <div>
           <h1 className="text-2xl font-bold text-gray-900">Settings</h1>
-          <p className="text-gray-500">Manage your Le-ture system preferences</p>
+          <p className="text-gray-500">
+            Manage your Le-ture system preferences
+          </p>
         </div>
         <Button onClick={handleSave}>
           <Save className="w-4 h-4 mr-2" />
@@ -74,10 +92,15 @@ export default function Settings() {
               <CardContent className="space-y-6">
                 <div className="flex items-center justify-between">
                   <div>
-                    <Label htmlFor="email-alerts" className="text-base font-medium">
+                    <Label
+                      htmlFor="email-alerts"
+                      className="text-base font-medium"
+                    >
                       Email Alerts
                     </Label>
-                    <p className="text-sm text-gray-500">Receive alert notifications via email</p>
+                    <p className="text-sm text-gray-500">
+                      Receive alert notifications via email
+                    </p>
                   </div>
                   <Switch
                     id="email-alerts"
@@ -85,7 +108,10 @@ export default function Settings() {
                     onCheckedChange={(checked) =>
                       setSettings((prev) => ({
                         ...prev,
-                        notifications: { ...prev.notifications, emailAlerts: checked },
+                        notifications: {
+                          ...prev.notifications,
+                          emailAlerts: checked,
+                        },
                       }))
                     }
                   />
@@ -93,10 +119,15 @@ export default function Settings() {
 
                 <div className="flex items-center justify-between">
                   <div>
-                    <Label htmlFor="push-notifications" className="text-base font-medium">
+                    <Label
+                      htmlFor="push-notifications"
+                      className="text-base font-medium"
+                    >
                       Push Notifications
                     </Label>
-                    <p className="text-sm text-gray-500">Receive push notifications in your browser</p>
+                    <p className="text-sm text-gray-500">
+                      Receive push notifications in your browser
+                    </p>
                   </div>
                   <Switch
                     id="push-notifications"
@@ -104,14 +135,19 @@ export default function Settings() {
                     onCheckedChange={(checked) =>
                       setSettings((prev) => ({
                         ...prev,
-                        notifications: { ...prev.notifications, pushNotifications: checked },
+                        notifications: {
+                          ...prev.notifications,
+                          pushNotifications: checked,
+                        },
                       }))
                     }
                   />
                 </div>
 
                 <div className="space-y-4">
-                  <Label className="text-base font-medium">Email Recipients</Label>
+                  <Label className="text-base font-medium">
+                    Email Recipients
+                  </Label>
                   <Textarea
                     placeholder="Enter email addresses separated by commas"
                     defaultValue="admin@le-ture.com, alerts@le-ture.com"
@@ -127,12 +163,16 @@ export default function Settings() {
             <Card>
               <CardHeader>
                 <CardTitle>Alert Thresholds</CardTitle>
-                <p className="text-sm text-gray-500">Set the threshold values that will trigger alerts</p>
+                <p className="text-sm text-gray-500">
+                  Set the threshold values that will trigger alerts
+                </p>
               </CardHeader>
               <CardContent className="space-y-6">
                 <div className="grid grid-cols-2 gap-6">
                   <div className="space-y-2">
-                    <Label htmlFor="humidity-threshold">Humidity Threshold (%)</Label>
+                    <Label htmlFor="humidity-threshold">
+                      Humidity Threshold (%)
+                    </Label>
                     <Input
                       id="humidity-threshold"
                       type="number"
@@ -153,7 +193,9 @@ export default function Settings() {
                   </div>
 
                   <div className="space-y-2">
-                    <Label htmlFor="temperature-threshold">Temperature Threshold (°C)</Label>
+                    <Label htmlFor="temperature-threshold">
+                      Temperature Threshold (°C)
+                    </Label>
                     <Input
                       id="temperature-threshold"
                       type="number"
@@ -174,7 +216,9 @@ export default function Settings() {
                   </div>
 
                   <div className="space-y-2">
-                    <Label htmlFor="water-threshold">Water Level Threshold (%)</Label>
+                    <Label htmlFor="water-threshold">
+                      Water Level Threshold (%)
+                    </Label>
                     <Input
                       id="water-threshold"
                       type="number"
@@ -195,7 +239,9 @@ export default function Settings() {
                   </div>
 
                   <div className="space-y-2">
-                    <Label htmlFor="filter-threshold">Filter Life Alert (days)</Label>
+                    <Label htmlFor="filter-threshold">
+                      Filter Life Alert (days)
+                    </Label>
                     <Input
                       id="filter-threshold"
                       type="number"
@@ -232,7 +278,9 @@ export default function Settings() {
               <CardContent className="space-y-6">
                 <div className="grid grid-cols-2 gap-6">
                   <div className="space-y-2">
-                    <Label htmlFor="data-retention">Data Retention (days)</Label>
+                    <Label htmlFor="data-retention">
+                      Data Retention (days)
+                    </Label>
                     <Select
                       value={settings.system.dataRetention}
                       onValueChange={(value) =>
@@ -294,10 +342,15 @@ export default function Settings() {
               <CardContent className="space-y-6">
                 <div className="flex items-center justify-between">
                   <div>
-                    <Label htmlFor="two-factor" className="text-base font-medium">
+                    <Label
+                      htmlFor="two-factor"
+                      className="text-base font-medium"
+                    >
                       Two-Factor Authentication
                     </Label>
-                    <p className="text-sm text-gray-500">Add an extra layer of security to your account</p>
+                    <p className="text-sm text-gray-500">
+                      Add an extra layer of security to your account
+                    </p>
                   </div>
                   <Switch
                     id="two-factor"
@@ -321,5 +374,5 @@ export default function Settings() {
         </TabsContent>
       </Tabs>
     </div>
-  )
+  );
 }
