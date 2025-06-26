@@ -1,22 +1,78 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { Area, AreaChart, CartesianGrid, ResponsiveContainer, XAxis, YAxis } from "recharts"
-import { Bell, Calendar, MoreHorizontal, TrendingDown, TrendingUp, AlertTriangle } from "lucide-react"
+import { useState } from "react";
+import {
+  Area,
+  AreaChart,
+  CartesianGrid,
+  ResponsiveContainer,
+  XAxis,
+  YAxis,
+} from "recharts";
+import {
+  Bell,
+  Calendar,
+  MoreHorizontal,
+  TrendingDown,
+  TrendingUp,
+  AlertTriangle,
+} from "lucide-react";
 
-import { Badge } from "@/components/ui/badge"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 const chartData = [
-  { time: "06:00", humidity: 45, temperature: 22, waterLevel: 95, mistOutput: 60 },
-  { time: "07:00", humidity: 48, temperature: 23, waterLevel: 92, mistOutput: 65 },
-  { time: "08:00", humidity: 52, temperature: 24, waterLevel: 89, mistOutput: 70 },
-  { time: "09:00", humidity: 55, temperature: 25, waterLevel: 86, mistOutput: 75 },
-  { time: "10:00", humidity: 58, temperature: 24, waterLevel: 83, mistOutput: 80 },
-  { time: "11:00", humidity: 60, temperature: 24, waterLevel: 80, mistOutput: 85 },
-  { time: "12:00", humidity: 65, temperature: 24, waterLevel: 77, mistOutput: 90 },
-]
+  {
+    time: "06:00",
+    humidity: 45,
+    temperature: 22,
+    waterLevel: 95,
+    mistOutput: 60,
+  },
+  {
+    time: "07:00",
+    humidity: 48,
+    temperature: 23,
+    waterLevel: 92,
+    mistOutput: 65,
+  },
+  {
+    time: "08:00",
+    humidity: 52,
+    temperature: 24,
+    waterLevel: 89,
+    mistOutput: 70,
+  },
+  {
+    time: "09:00",
+    humidity: 55,
+    temperature: 25,
+    waterLevel: 86,
+    mistOutput: 75,
+  },
+  {
+    time: "10:00",
+    humidity: 58,
+    temperature: 24,
+    waterLevel: 83,
+    mistOutput: 80,
+  },
+  {
+    time: "11:00",
+    humidity: 60,
+    temperature: 24,
+    waterLevel: 80,
+    mistOutput: 85,
+  },
+  {
+    time: "12:00",
+    humidity: 65,
+    temperature: 24,
+    waterLevel: 77,
+    mistOutput: 90,
+  },
+];
 
 const alerts = [
   {
@@ -47,10 +103,10 @@ const alerts = [
     time: "2 Days ago",
     device: "Le-ture Unit #1",
   },
-]
+];
 
 export default function Dashboard() {
-  const [selectedMetric, setSelectedMetric] = useState("humidity")
+  const [selectedMetric, setSelectedMetric] = useState("humidity");
 
   return (
     <div className="p-6 min-h-full">
@@ -80,7 +136,7 @@ export default function Dashboard() {
       <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
         {/* Main Chart Area */}
         <div className="lg:col-span-3">
-          <Card>
+          <Card className="overflow-hidden rounded-xl">
             <CardHeader>
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-6">
@@ -88,26 +144,34 @@ export default function Dashboard() {
                     <div className="w-8 h-8 bg-teal-600 rounded-full flex items-center justify-center">
                       <div className="w-4 h-4 bg-white rounded-full" />
                     </div>
-                    <span className="font-semibold text-lg">Le-ture Humidifier</span>
+                    <span className="font-semibold text-lg">
+                      Le-ture Humidifier
+                    </span>
                   </div>
                 </div>
                 <div className="flex gap-4">
                   <Button
-                    variant={selectedMetric === "humidity" ? "default" : "ghost"}
+                    variant={
+                      selectedMetric === "humidity" ? "default" : "ghost"
+                    }
                     size="sm"
                     onClick={() => setSelectedMetric("humidity")}
                   >
                     Humidity
                   </Button>
                   <Button
-                    variant={selectedMetric === "temperature" ? "default" : "ghost"}
+                    variant={
+                      selectedMetric === "temperature" ? "default" : "ghost"
+                    }
                     size="sm"
                     onClick={() => setSelectedMetric("temperature")}
                   >
                     Temperature
                   </Button>
                   <Button
-                    variant={selectedMetric === "waterLevel" ? "default" : "ghost"}
+                    variant={
+                      selectedMetric === "waterLevel" ? "default" : "ghost"
+                    }
                     size="sm"
                     onClick={() => setSelectedMetric("waterLevel")}
                   >
@@ -117,12 +181,21 @@ export default function Dashboard() {
               </div>
             </CardHeader>
             <CardContent>
-              <div className="h-80">
+              <div className="h-[320px] sm:h-[360px] md:h-[400px] lg:h-[440px]">
                 <ResponsiveContainer width="100%" height="100%">
                   <AreaChart data={chartData}>
                     <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
-                    <XAxis dataKey="time" axisLine={false} tickLine={false} tick={{ fontSize: 12, fill: "#666" }} />
-                    <YAxis axisLine={false} tickLine={false} tick={{ fontSize: 12, fill: "#666" }} />
+                    <XAxis
+                      dataKey="time"
+                      axisLine={false}
+                      tickLine={false}
+                      tick={{ fontSize: 12, fill: "#666" }}
+                    />
+                    <YAxis
+                      axisLine={false}
+                      tickLine={false}
+                      tick={{ fontSize: 12, fill: "#666" }}
+                    />
                     <Area
                       type="monotone"
                       dataKey={selectedMetric}
@@ -133,8 +206,16 @@ export default function Dashboard() {
                     />
                     <defs>
                       <linearGradient id="gradient" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="0%" stopColor="#8b5cf6" stopOpacity={0.3} />
-                        <stop offset="100%" stopColor="#8b5cf6" stopOpacity={0} />
+                        <stop
+                          offset="0%"
+                          stopColor="#8b5cf6"
+                          stopOpacity={0.3}
+                        />
+                        <stop
+                          offset="100%"
+                          stopColor="#8b5cf6"
+                          stopOpacity={0}
+                        />
                       </linearGradient>
                     </defs>
                   </AreaChart>
@@ -155,7 +236,10 @@ export default function Dashboard() {
                   <TrendingUp className="w-5 h-5 text-green-500" />
                 </div>
                 <div className="w-full bg-gray-200 rounded-full h-2 mt-2">
-                  <div className="bg-green-600 h-2 rounded-full" style={{ width: "65%" }} />
+                  <div
+                    className="bg-green-600 h-2 rounded-full"
+                    style={{ width: "65%" }}
+                  />
                 </div>
               </CardContent>
             </Card>
@@ -170,7 +254,10 @@ export default function Dashboard() {
                   <TrendingUp className="w-5 h-5 text-blue-500" />
                 </div>
                 <div className="w-full bg-gray-200 rounded-full h-2 mt-2">
-                  <div className="bg-blue-600 h-2 rounded-full" style={{ width: "70%" }} />
+                  <div
+                    className="bg-blue-600 h-2 rounded-full"
+                    style={{ width: "70%" }}
+                  />
                 </div>
               </CardContent>
             </Card>
@@ -185,7 +272,10 @@ export default function Dashboard() {
                   <TrendingDown className="w-5 h-5 text-orange-500" />
                 </div>
                 <div className="w-full bg-gray-200 rounded-full h-2 mt-2">
-                  <div className="bg-orange-600 h-2 rounded-full" style={{ width: "85%" }} />
+                  <div
+                    className="bg-orange-600 h-2 rounded-full"
+                    style={{ width: "85%" }}
+                  />
                 </div>
               </CardContent>
             </Card>
@@ -200,7 +290,10 @@ export default function Dashboard() {
                   <TrendingUp className="w-5 h-5 text-purple-500" />
                 </div>
                 <div className="w-full bg-gray-200 rounded-full h-2 mt-2">
-                  <div className="bg-purple-600 h-2 rounded-full" style={{ width: "90%" }} />
+                  <div
+                    className="bg-purple-600 h-2 rounded-full"
+                    style={{ width: "90%" }}
+                  />
                 </div>
               </CardContent>
             </Card>
@@ -253,13 +346,22 @@ export default function Dashboard() {
             </CardHeader>
             <CardContent className="space-y-4">
               {alerts.map((alert) => (
-                <div key={alert.id} className="p-3 rounded-lg border border-gray-200">
+                <div
+                  key={alert.id}
+                  className="p-3 rounded-lg border border-gray-200"
+                >
                   <div className="flex items-start gap-2">
                     <AlertTriangle
-                      className={`w-4 h-4 mt-0.5 ${alert.type === "error" ? "text-red-500" : "text-orange-500"}`}
+                      className={`w-4 h-4 mt-0.5 ${
+                        alert.type === "error"
+                          ? "text-red-500"
+                          : "text-orange-500"
+                      }`}
                     />
                     <div className="flex-1">
-                      <p className="text-sm font-medium text-gray-900">{alert.title}</p>
+                      <p className="text-sm font-medium text-gray-900">
+                        {alert.title}
+                      </p>
                       <p className="text-xs text-gray-500 mt-1">{alert.time}</p>
                       <p className="text-xs text-gray-400">{alert.device}</p>
                     </div>
@@ -271,5 +373,5 @@ export default function Dashboard() {
         </div>
       </div>
     </div>
-  )
+  );
 }
